@@ -8,10 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,5 +32,11 @@ public class AnimeController {
     @GetMapping("/{id}")
     public ResponseEntity<Anime> list(@PathVariable long id){
         return ResponseEntity.ok(animeService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<Anime> save(@RequestBody Anime anime){
+        Anime animeSaved = animeService.save(anime);
+        return new ResponseEntity<>(animeSaved, HttpStatus.CREATED);
     }
 }
