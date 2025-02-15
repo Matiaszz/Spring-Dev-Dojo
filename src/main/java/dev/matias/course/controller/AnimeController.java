@@ -1,10 +1,15 @@
 package dev.matias.course.controller;
 
 import dev.matias.course.domain.Anime;
+import dev.matias.course.service.AnimeService;
 import dev.matias.course.utils.DateUtil;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,17 +18,22 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("anime")
+@RequestMapping("animes")
+@RequiredArgsConstructor
 public class AnimeController {
 
-    @Autowired
-    private DateUtil dateUtil;
+    private final DateUtil dateUtil;
+    private final AnimeService animeService;
 
 
-    @GetMapping("/list")
-    public List<Anime> list(){
+    @GetMapping
+    public ResponseEntity<List<Anime>> list(){
         log.info(dateUtil.formatLocalDateTimeToDatabaseType(LocalDateTime.now()));
+        return ResponseEntity.ok(animeService.listAll());
+    }
 
-        return List.of(new Anime("DBZ"), new Anime("Naruto"));
+    @GetMapping("/{id}")
+    public ResponseEntity<Anime> list(@PathVariable long id){
+        return ResponseEntity.ok(animeService.findById(id));
     }
 }
