@@ -1,12 +1,9 @@
 package dev.matias.course.repositories;
 
 import dev.matias.course.domain.Anime;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
 @Repository
-public interface AnimeRepository {
-    List<Anime> getAllAnimes();
-    Anime findById(long id);
+public interface AnimeRepository extends JpaRepository<Anime, Long> {
 }

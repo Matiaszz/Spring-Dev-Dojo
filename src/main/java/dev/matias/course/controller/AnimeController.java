@@ -1,6 +1,8 @@
 package dev.matias.course.controller;
 
 import dev.matias.course.domain.Anime;
+import dev.matias.course.requests.AnimePostRequestBody;
+import dev.matias.course.requests.AnimePutRequestBody;
 import dev.matias.course.service.AnimeService;
 import dev.matias.course.utils.DateUtil;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +37,7 @@ public class AnimeController {
     }
 
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody Anime anime){
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody anime){
         Anime animeSaved = animeService.save(anime);
         return new ResponseEntity<>(animeSaved, HttpStatus.CREATED);
     }
@@ -46,8 +48,8 @@ public class AnimeController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @PutMapping
-    public ResponseEntity<Void> update(@RequestBody Anime anime){
-        animeService.update(anime);
+    public ResponseEntity<Void> update(@RequestBody AnimePutRequestBody animePutRequestBody){
+        animeService.update(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
