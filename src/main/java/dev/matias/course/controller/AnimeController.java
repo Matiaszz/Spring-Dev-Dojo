@@ -6,8 +6,6 @@ import dev.matias.course.requests.AnimePutRequestBody;
 import dev.matias.course.service.AnimeService;
 import dev.matias.course.utils.DateUtil;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Slf4j
+
 @RestController
-@RequestMapping("animes")
+@RequestMapping("/animes")
 @RequiredArgsConstructor
 public class AnimeController {
 
@@ -27,7 +25,6 @@ public class AnimeController {
 
     @GetMapping
     public ResponseEntity<List<Anime>> list(){
-        log.info(dateUtil.formatLocalDateTimeToDatabaseType(LocalDateTime.now()));
         return ResponseEntity.ok(animeService.listAll());
     }
 
@@ -51,5 +48,10 @@ public class AnimeController {
     public ResponseEntity<Void> update(@RequestBody AnimePutRequestBody animePutRequestBody){
         animeService.update(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/find")
+    public ResponseEntity<Anime> find(@RequestParam String name){
+        return ResponseEntity.ok(animeService.findByName(name));
     }
 }

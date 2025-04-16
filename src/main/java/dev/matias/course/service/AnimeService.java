@@ -1,6 +1,7 @@
 package dev.matias.course.service;
 
 import dev.matias.course.domain.Anime;
+import dev.matias.course.exceptions.BadRequestException;
 import dev.matias.course.mapper.AnimeMapper;
 import dev.matias.course.repositories.AnimeRepository;
 import dev.matias.course.requests.AnimePostRequestBody;
@@ -27,7 +28,12 @@ public class AnimeService {
 
     public Anime findById(long id){
         System.out.println(animeRepository);
-        return animeRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Anime not found"));
+        return animeRepository.findById(id).orElseThrow(() -> new BadRequestException("Anime not found"));
+    }
+
+    public Anime findByName(String name){
+        System.out.println(animeRepository);
+        return animeRepository.findByName(name).orElseThrow(() -> new BadRequestException("Anime not found (name)"));
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody){
